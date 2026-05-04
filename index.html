@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI in Construction Portfolio | Leonie Eisenring</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --midnight: #210124;
+  --olive: #91972a;
+  --charcoal: #605f5e;
+  --cerulean: #247ba0;
+  --light: #f5f5f5;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  color: var(--midnight);
+  line-height: 1.7;
+  background-color: white;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+  background: white;
+  border-bottom: 1px solid #eee;
+  z-index: 1000;
+}
+
+nav ul {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: var(--cerulean);
+}
+
+/* HERO IMAGE */
+.hero {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  color: white;
+}
+
+.hero img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.1);
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: relative;
+  padding: 120px 80px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  width: 100%;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  max-width: 800px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  opacity: 0.9;
+}
+
+/* SECTIONS */
+section {
+  padding: 100px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.full-width {
+  max-width: 100%;
+  padding: 100px 0;
+}
+
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--midnight);
+}
+
+h1 { font-size: 2.5rem; border-bottom: 2px solid var(--cerulean); padding-bottom: 10px; display: inline-block; margin-bottom: 40px;}
+h2 { font-size: 2rem; margin-top: 0; }
+h3 { font-size: 1.3rem; }
+
+/* ABOUT LINKS */
+.about-links {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 1px solid #eee;
+}
+
+.about-links a {
+  text-decoration: none;
+  color: var(--cerulean);
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: 1px solid var(--cerulean);
+  padding: 10px 30px;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.about-links a:hover {
+  background: var(--cerulean);
+  color: white;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  padding: 30px 25px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  background: white;
+  transition: 0.3s;
+  border-radius: 8px;
+}
+
+.card h3 {
+  margin: 0 0 10px 0;
+  color: var(--cerulean);
+}
+
+.card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--charcoal);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--cerulean);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* FADE */
+.fade {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 1s ease;
+}
+
+.fade.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* DETAIL (FOR TABS) */
+.detail {
+  display: none;
+  margin-top: 50px;
+  padding: 40px;
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+}
+
+.active { display: block; animation: fadeIn 0.5s; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+iframe.video-iframe {
+  width: 100%;
+  height: 600px;
+  margin-top: 30px;
+  border: none;
+  border-radius: 8px;
+  background: #000;
+}
+
+iframe.pdf-iframe {
+  width: 100%;
+  height: 600px;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.meta-info {
+  color: var(--charcoal);
+  font-style: italic;
+  margin-bottom: 20px;
+  border-left: 3px solid var(--olive);
+  padding-left: 15px;
+}
+
+/* LIGHT */
+.light { background: var(--light); }
+
+/* CONTENT STYLING */
+ul { padding-left: 20px; }
+li { margin-bottom: 10px; }
+a.inline-link { color: var(--cerulean); text-decoration: none; font-weight: 500; }
+a.inline-link:hover { text-decoration: underline; }
+
+.q-and-a {
+  margin-top: 40px;
+  background: #fafafa;
+  padding: 30px;
+  border-radius: 8px;
+  border-left: 4px solid var(--cerulean);
+}
+
+.q-and-a h4 { margin-top: 0; font-size: 1.1rem; color: var(--midnight); }
+
+/* FOOTER */
+footer {
+  background: var(--midnight);
+  color: white;
+  padding: 40px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+@media(max-width: 900px){
+  .grid { grid-template-columns: 1fr 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+}
+
+@media(max-width: 600px){
+  .grid { grid-template-columns: 1fr; }
+  nav ul { display: none; } /* Simplified for mobile */
+  section, .hero-overlay { padding: 60px 30px; }
+  .hero h1 { font-size: 2.5rem; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div><strong>LEONIE EISENRING</strong></div>
+  <ul>
+    <li><a href="#about">About Me</a></li>
+    <li><a href="#weekly">Weekly Articles</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#process">Creating This Website</a></li>
+  </ul>
+</nav>
+
+<section class="hero full-width" style="padding:0;">
+  <img src="Construction Photo for Website.jpg" alt="Construction Site in the works">
+
+  <div class="hero-overlay">
+    <h1>AI in Construction & Facilities Management</h1>
+    <p>Exploring how AI is shaping construction workflows and decision-making</p>
+  </div>
+</section>
+
+<section id="about" class="fade">
+  <h2>About Me</h2>
+  <p>Student of Dr. Smithwick's CMET 6000 class focusing on AI in construction, procurement, and facilities management. This portfolio reflects hands-on exploration of AI tools, BIM integration, and industry insights.</p>
+  <ul>
+    <li>Master’s in Engineering Construction and Facilities Management (UNC Charlotte)</li>
+    <li>Bachelor’s Degree in Arts of Architecture (UNC Charlotte)</li>
+    <li>LEED Green Associate</li>
+    <li>Experience working for Architecture firms in the U.S. and Switzerland</li>
+  </ul>
+
+  <div class="about-links">
+    <a href="https://www.linkedin.com/in/leonie-eisenring-9a400725b/" target="_blank">LinkedIn</a>
+    <a href="mailto:leisenri@charlotte.edu">Email</a>
+  </div>
+</section>
+
+<section class="light full-width fade">
+  <div class="section-inner" style="text-align: center;">
+    <h2 style="font-size: 2.5rem; color: var(--cerulean);">In Their Words</h2>
+    <p style="font-size: 1.5rem; font-style: italic; max-width: 800px; margin: 0 auto; line-height: 1.6;">
+      “BIM isn’t design, it’s a dataset and a workflow. AI isn’t solving creatively new problems, it’s applying known solutions.”
+    </p>
+  </div>
+</section>
+
+<section id="weekly" class="fade">
+  <h1>Weekly Article Summaries</h1>
+
+  <div class="grid">
+    <div class="card" onclick="openSection('week1')"><h3>Week 1</h3><p>AI is Coming to Class</p></div>
+    <div class="card" onclick="openSection('week2')"><h3>Week 2</h3><p>TIME’s Architects of AI</p></div>
+    <div class="card" onclick="openSection('week3')"><h3>Week 3</h3><p>AI Superintelligence Ban</p></div>
+    <div class="card" onclick="openSection('week4')"><h3>Week 4</h3><p>AI in AEC Decisions</p></div>
+    <div class="card" onclick="openSection('week5')"><h3>Week 5</h3><p>Autodesk Shows its AI Hand</p></div>
+    <div class="card" onclick="openSection('week6')"><h3>Week 6</h3><p>AI Agents in Finance</p></div>
+    <div class="card" onclick="openSection('week7')"><h3>Week 7</h3><p>Vibe Coding</p></div>
+    <div class="card" onclick="openSection('week8')"><h3>Week 8</h3><p>HR Leaders on AI Agents</p></div>
+    <div class="card" onclick="openSection('week9')"><h3>Week 9</h3><p>DHS AI Surveillance</p></div>
+    <div class="card" onclick="openSection('week10')"><h3>Week 10</h3><p>AI in Food Procurement</p></div>
+    <div class="card" onclick="openSection('week11')"><h3>Week 11</h3><p>Gen AI & Social Media</p></div>
+    <div class="card" onclick="openSection('week12')"><h3>Week 12</h3><p>AI's Impact on Majors</p></div>
+    <div class="card" onclick="openSection('week13')"><h3>Week 13</h3><p>AI Documentaries Insights</p></div>
+  </div>
+
+  <div id="week1" class="detail article-detail">
+    <h2>A.I. Is Coming to Class. These Professors Want to Ease Your Worries</h2>
+    <div class="meta-info">By: Sharon Otterman, The New York Times | Publication Date: January 2026</div>
+    <p><strong>Summary of findings:</strong> The New York Times article examines how higher education institutions are grappling with the rapid entrance of generative artificial intelligence into university classrooms. Rather than framing AI strictly as a threat to academic integrity, the article highlights a growing movement among professors who argue that engagement (rather than prohibition) is the only sustainable response.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/leKLXprAtEC" allowfullscreen></iframe>
+  </div>
+
+  <div id="week2" class="detail article-detail">
+    <h2>The Architects of AI Are TIME’s 2025 Person of the Year</h2>
+    <div class="meta-info">By: Charlie Campbell, Andrew R. Chow and Billy Perrigo, Time Magazine | Publication Date: December 11, 2025</div>
+    <p><strong>Summary of findings:</strong> The Time magazine article names “The Architects of AI” as its 2025 Person of the Year, spotlighting the group of individuals and corporate leaders who have been most influential in shaping the development, deployment, and societal impact of artificial intelligence in 2025.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/jkWymgBuW7q" allowfullscreen></iframe>
+  </div>
+
+  <div id="week3" class="detail article-detail">
+    <h2>Call to ban AI superintelligence could redraw the global tech race between the US and China</h2>
+    <div class="meta-info">By: Gyana Swain, Computer World | Publication Date: October 22, 2025</div>
+    <p><strong>Summary of findings:</strong> The article centers on an open letter organized by the Future of Life Institute and signed by more than 850 scholars, technologists, and public figures. Among the signatories are influential AI researchers such as Geoffrey Hinton and Yoshua Bengio, alongside technology leaders like Steve Wozniak and policy figures including Susan Rice.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/l8xHORSnpWd" allowfullscreen></iframe>
+  </div>
+
+  <div id="week4" class="detail article-detail">
+    <h2>AI in AEC: why better decisions matter more than faster tools</h2>
+    <div class="meta-info">By: Amy Bunszel | Publication Date: February 5, 2026</div>
+    <p><strong>Summary of findings:</strong> Early AI in AEC focused on improving efficiency through automation and faster coordination, but the article argues that speed alone no longer meets today’s complex demands. Instead, AI’s real value lies in enabling better decision-making by helping teams analyze data, site conditions, and performance earlier in the process. This allows professionals to understand impacts sooner, optimize outcomes within tight budgets and sustainability goals, and ultimately use AI as a tool to support, rather than replace, expert judgment.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/PhuSNLLIfof" allowfullscreen></iframe>
+  </div>
+
+  <div id="week5" class="detail article-detail">
+    <h2>Autodesk shows its AI hand</h2>
+    <div class="meta-info">By: Greg Corke | Publication Date: October 2, 2025</div>
+    <p><strong>Summary of findings:</strong> The article examines how Autodesk is strategically embedding AI into its existing BIM and engineering ecosystem, signaling a shift away from standalone AI tools toward deeply integrated, workflow-native intelligence. Rather than presenting AI as a disruptive replacement for designers or engineers, the company frames it as an assistive layer that enhances how professionals interact with project data.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/x7IpqOWjzZi" allowfullscreen></iframe>
+  </div>
+
+  <div id="week6" class="detail article-detail">
+    <h2>Why AI Agents Are Becoming the New Financial Intermediaries</h2>
+    <div class="meta-info">By: Alex McDougall | Publication Date: March 5, 2026</div>
+    <p><strong>Summary of findings:</strong> The article argues that AI agents are beginning to replace traditional financial intermediaries by shifting decision-making power and data ownership toward consumers. Historically, financial markets have relied on intermediary platforms—such as comparison websites, brokers, or lending marketplaces—that sit between consumers and financial providers. These platforms often profit from controlling data flows and creating information asymmetries. The author characterizes this system as an “extract and abstract” model, where consumer information is collected and resold multiple times while the platforms capture most of the value generated in the transaction.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/fNHHQoCBJPk" allowfullscreen></iframe>
+  </div>
+
+  <div id="week7" class="detail article-detail">
+    <h2>Coding without code: How vibe coding rewrites the rules</h2>
+    <div class="meta-info">By: Stephen Kenney - University of Cincinnati | Publication Date: March 17, 2026</div>
+    <p><strong>Summary of findings:</strong> The article introduces the concept of “vibe coding” as an emerging paradigm in software development in which individuals can create functional digital tools without traditional programming expertise. Rather than writing syntactically precise code, users communicate their intentions through natural language, allowing AI systems to interpret, generate, and refine the underlying code structure. This represents a fundamental shift in how software is produced, moving from technical execution toward conceptual articulation.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/skUcmp5L7wo" allowfullscreen></iframe>
+  </div>
+
+  <div id="week8" class="detail article-detail">
+    <h2>America’s HR Leaders Say We’re Thinking About AI Agents All Wrong</h2>
+    <div class="meta-info">By: Isabella Bosquette - Wall Street Journal (CIO Journal) | Publication Date: March 27, 2026</div>
+    <p><strong>Summary of findings:</strong> The article challenges the increasingly popular notion that AI agents should be treated as equivalent to human employees within organizational structures. Instead, leading HR executives argue that this conceptual framing is fundamentally flawed and limits the strategic value that AI can provide.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/80OfozRM0ys" allowfullscreen></iframe>
+  </div>
+
+  <div id="week9" class="detail article-detail">
+    <h2>Mission Creep: AI Surveillance at DHS Crosses Dangerous Line Into Tracking Americans</h2>
+    <div class="meta-info">By: Steven Hubbard - American Immigration Council | Publication Date: Febuary 6, 2026</div>
+    <p><strong>Summary of findings:</strong> The article critically examines the expansion of artificial intelligence within U.S. government surveillance systems, particularly within the Department of Homeland Security (DHS) and Immigration and Customs Enforcement (ICE). Its central argument is that AI deployment has undergone significant “mission creep,” extending beyond its original purpose of immigration enforcement into broader surveillance of American citizens.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/SQWQCOl4j49" allowfullscreen></iframe>
+  </div>
+
+  <div id="week10" class="detail article-detail">
+    <h2>How is AI used for Procurement Across Food Chains?</h2>
+    <div class="meta-info">By: Louise Collins - Procurement Magazine | Publication Date: April 9, 2026</div>
+    <p><strong>Summary of findings:</strong> The article from Procurement Magazine explores how artificial intelligence is fundamentally transforming procurement processes within food supply chains. At its core, the argument is that AI is shifting procurement from a reactive, transaction-based function into a predictive and strategic system driven by data.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/yJ9bNc0WndF" allowfullscreen></iframe>
+  </div>
+
+  <div id="week11" class="detail article-detail">
+    <h2>The impact of generative AI on social media: an experimental study</h2>
+    <div class="meta-info">By: Anders Giovanni Møller - Scientific Reports (Nature) | Publication Date: February 17, 2026</div>
+    <p><strong>Summary of findings:</strong> This article presents a rigorous experimental study examining how generative AI tools influence both content production and user perception within social media environments. Using a controlled experiment with 680 U.S. participants, the researchers simulate a realistic social media platform to test four AI interventions: chat assistance, conversation starters, feedback tools, and reply suggestions.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/eXRSg9Rtup5" allowfullscreen></iframe>
+  </div>
+
+  <div id="week12" class="detail article-detail">
+    <h2>College Students Weigh AI's Impact on Majors and Careers</h2>
+    <div class="meta-info">By: Stephanie Marken - Gallup | Publication Date: April 2, 2026</div>
+    <p><strong>Summary of findings:</strong> The Gallup article presents a compelling snapshot of how artificial intelligence is actively reshaping the academic decision-making landscape among college students. Most notably, 42% of bachelor’s degree students report reconsidering their major due to AI, signaling a profound shift in how future professionals evaluate the relevance and longevity of their chosen fields.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/H1HUdys9OVu" allowfullscreen></iframe>
+  </div>
+
+  <div id="week13" class="detail article-detail">
+    <h2>I Watched Two AI Documentaries Back-to-Back. Here’s What They Taught Me About the Future of Business</h2>
+    <div class="meta-info">By: The AI Consultancy - Medium | Publication Date: December 2, 2025</div>
+    <p><strong>Summary of findings:</strong> The article synthesizes insights from two AI-focused documentaries to articulate a forward-looking perspective on the role of artificial intelligence in shaping the future of business. Drawing implicitly on the philosophies associated with figures like Ilya Sutskever and Demis Hassabis, the piece frames AI not merely as a tool, but as a transformative force that is redefining how organizations operate, compete, and innovate.</p>
+    <iframe class="video-iframe" src="https://ai.invideo.io/watch/sKI0GcSVTKc" allowfullscreen></iframe>
+  </div>
+</section>
+
+<section id="projects" class="light full-width fade">
+  <div class="section-inner">
+    <h1>Projects & Coursework</h1>
+
+    <div class="grid-2">
+      <div class="card" onclick="openSection('togal')">
+        <h3 style="font-size: 1.8rem;">Togal.AI Demo</h3>
+        <p>Testing and analyzing AI quantity takeoff capabilities across five different construction scenarios.</p>
+      </div>
+
+      <div class="card" onclick="openSection('final')">
+        <h3 style="font-size: 1.8rem;">Final Project</h3>
+        <p>Investigating AI adoption across AEC firms through literature review and direct industry interviews.</p>
+      </div>
+    </div>
+
+    <div id="togal" class="detail">
+      <h2>Togal.AI Demo</h2>
+      <p style="margin-bottom: 40px;">For each of the 5 drawings below, we uploaded each drawing into Togal.AI separately and launched the AI features to see the result. We uploaded our quantity takeoffs and provided information on the quantities Togal.AI was able to achieve. We answered reflection questions.</p>
+
+      <div style="margin-bottom: 50px;">
+        <p><strong>Drawing 1 — Military Office</strong> (Floor Plan & RCP in scanned drawings)</p>
+        <iframe class="pdf-iframe" src="1.2026-02-20_1---Floor-Plan-&-RCP-In-Scanned-Drawings-(Military-Office)-Set 2.pdf"></iframe>
+      </div>
+
+      <div style="margin-bottom: 50px;">
+        <p><strong>Drawing 2 — Fire Station</strong> (Floor Plans in DD Stage)</p>
+        <iframe class="pdf-iframe" src="2.2026-02-20_2---Floor-Plans-In-DD-Stage-(Fire-Station)-Set 2.pdf"></iframe>
+      </div>
+
+      <div style="margin-bottom: 50px;">
+        <p><strong>Drawing 3 — Multistory Hotel</strong> (Floor Plan in SD Stage)</p>
+        <iframe class="pdf-iframe" src="3.2026-02-20_3 - Floor Plan in SD Stage [Multistory Hotel] _ A101_ LEVEL 1 - OVERALL - FLOOR PLAN 2.pdf"></iframe>
+      </div>
+
+      <div style="margin-bottom: 50px;">
+        <p><strong>Drawing 4 — Youth Center</strong> (Foundation Plan)</p>
+        <iframe class="pdf-iframe" src="4.2026-02-20_4 - Foundation Plan [Youth Center] _ S2.1_ FOUNDATION PLAN 2.pdf"></iframe>
+      </div>
+
+      <div style="margin-bottom: 50px;">
+        <p><strong>Drawing 5 — Car Dealership</strong> (Exterior Elevations - This did not work in Toggle.AI)</p>
+        <img src="5. Failure of Elevation Proof.jpg" alt="Car Dealership Elevation" style="width: 100%; border: 1px solid #ddd; border-radius: 8px; margin-top: 15px;">
+      </div>
+
+      <div class="q-and-a">
+        <h4>Briefly describe the instances where Togal.AI appeared to be MOST accurate (considering all 5 sets of plans).</h4>
+        <p><strong>My Answer:</strong> Clean, plan-based drawings with clear geometry (Fire Station + Military Office + Multistory Hotel plans): When the files were vector-based or had strong line clarity, the AI correctly detected rooms, wall runs, and gross square footage with minimal correction needed. Repetitive layouts (like hotel rooms) were especially accurate because the AI could recognize patterns and scale them quickly. The pools or more organic figures were harder for Togal.AI to compute.</p>
+        <p>Simple structural layouts (Youth Center foundation plan): The system performed well counting repeated elements such as footings and identifying slab areas because these drawings relied on consistent shapes, fewer annotations, and less architectural complexity.</p>
+        <p><em>The AI performs best when drawings are clean, orthogonal, and pattern-based, allowing it to recognize geometry rather than interpret design intent.</em></p>
+      </div>
+
+      <div class="q-and-a">
+        <h4>Briefly describe the instances where Togal.AI appeared to be LEAST accurate (considering all 5 sets of plans). Where did you find the largest errors?</h4>
+        <p><strong>My Answer:</strong> Scanned Military Office Drawings (raster PDFs): Because these were physical scans, the AI struggled with faded lineweights, overlapping text, and distorted scaling. Room boundaries and wall separations required significant cleanup.</p>
+        <p>Complex Architectural Conditions (Multistory Hotel pool area): Irregular shapes, curved geometry, and mixed annotations reduced detection accuracy compared to standard rectilinear rooms.</p>
+        <p>Exterior Elevations (Car Dealership): The tool did not function successfully because elevations lack the planar information needed for quantity takeoff. AI estimating tools are optimized for plan-based geometry, not vertical representations.</p>
+        <p><em>Misinterpreting the scanned linework as walls, missing irregular shapes, and inability to extract usable data from non-plan drawings like elevations make this technology primarily useful for floor plans.</em></p>
+      </div>
+    </div>
+
+    <div id="final" class="detail">
+      <h2>Final Project</h2>
+      <p>Critically explored how Artificial Intelligence is being adopted, implemented, and managed within the architecture, engineering, and construction (AEC) industry. We worked individually and engaged directly with industry professionals — such as Project Managers, HR Executives, Innovation Leaders, CEOs, or any role in the AEC sector. The goal was to conduct brief interviews with 3 different organizations that have adopted or are actively evaluating AI technologies.</p>
+
+      <h3>Assignment Tasks</h3>
+      <ol>
+        <li>Literature Review</li>
+        <li>Identify Companies</li>
+        <li>Company Profiles & Interviews</li>
+        <li>Data Analysis & Thematic Discussion</li>
+      </ol>
+
+      <h3>Deliverables</h3>
+      <ul>
+        <li><a class="inline-link" href="Research_Report.pdf" target="_blank">Research Report</a></li>
+        <li><a class="inline-link" href="Presentation.pdf" target="_blank">Presentation</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="fade">
+  <h1>Creating This Website</h1>
+  <p style="font-size: 1.2rem; margin-bottom: 40px;">This portfolio was designed with a focus on clarity and minimalism.</p>
+
+  <div class="grid-2">
+    <div>
+      <h3>Site Map</h3>
+      <img src="Screenshot of Site Map for Portfolio Website.png" alt="Site Map" style="width:100%; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+    </div>
+    
+    <div>
+      <h3>Development</h3>
+      <ul style="line-height: 1.8;">
+        <li>I brainstormed the overall concept and organized my content (weekly AI summaries, projects, book review, and additional coursework) into a clear portfolio structure.</li>
+        <li>I created a sitemap and page hierarchy using Relume to plan navigation and user flow.</li>
+        <li>I selected a cohesive color palette (primary, accent, neutrals) using Coolors to maintain visual consistency.</li>
+        <li>I designed a simple, repeatable layout with a consistent header, navigation, and section structure across all pages that felt similar to an inspirational website I found on <a class="inline-link" href="https://vivre.agency/" target="_blank">vivre.agency</a>.</li>
+        <li>I built the website using HTML and CSS, focusing on reusable components such as hero sections, cards, and a footer.</li>
+        <li>I tested and refined my code incrementally using OneCompiler to ensure functionality and responsiveness.</li>
+        <li>I optimized spacing, typography, and image sizing to achieve a clean and professional appearance.</li>
+        <li>I deployed my live website using GitHub Pages and ensured the link was publicly accessible.</li>
+        <li>I iterated on the design through testing, improving usability, readability, and overall visual hierarchy.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Leonie Eisenring
+</footer>
+
+<script>
+function openSection(id){
+  // Find all detail sections
+  document.querySelectorAll('.detail').forEach(el => {
+    el.classList.remove('active');
+  });
+
+  // Open the specific one and scroll to it nicely
+  const target = document.getElementById(id);
+  target.classList.add('active');
+  
+  // Calculate offset to account for sticky nav
+  const yOffset = -100; 
+  const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+  window.scrollTo({top: y, behavior: 'smooth'});
+}
+
+/* fade in observer */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) e.target.classList.add("show");
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll(".fade").forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
