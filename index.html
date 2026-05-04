@@ -84,7 +84,7 @@ nav a:hover {
 .hero-overlay {
   position: relative;
   padding: 120px 80px;
-  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
   width: 100%;
   z-index: 1;
 }
@@ -93,16 +93,14 @@ nav a:hover {
   font-size: 3.5rem;
   max-width: 800px;
   margin-bottom: 10px;
-  color: #ffffff; /* Hardcoded to pure white to ensure it shows */
-  text-shadow: 2px 4px 12px rgba(0,0,0,0.9); /* Stronger shadow to pop against the image */
+  color: var(--light);
+  text-shadow: 2px 4px 10px rgba(0,0,0,0.7); /* Adds a shadow to make it pop against the photo */
 }
 
 .hero p {
   font-size: 1.2rem;
   max-width: 600px;
-  color: #ffffff;
-  opacity: 0.95;
-  text-shadow: 1px 2px 8px rgba(0,0,0,0.8);
+  opacity: 0.9;
 }
 
 /* SECTIONS */
@@ -471,7 +469,7 @@ footer {
 
     <div id="togal" class="detail">
       <h2>Togal.AI Demo</h2>
-      <p style="margin-bottom: 40px;">For each of the drawings below, we uploaded each drawing into Togal.AI separately and launched the AI features to see the result. We uploaded our quantity takeoffs and provided information on the quantities Togal.AI was able to achieve. We answered reflection questions.</p>
+      <p style="margin-bottom: 40px;">For each of the 5 drawings below, we uploaded each drawing into Togal.AI separately and launched the AI features to see the result. We uploaded our quantity takeoffs and provided information on the quantities Togal.AI was able to achieve. We answered reflection questions.</p>
 
       <div style="margin-bottom: 50px;">
         <p><strong>Drawing 1 — Military Office</strong> (Floor Plan & RCP in scanned drawings)</p>
@@ -491,6 +489,11 @@ footer {
       <div style="margin-bottom: 50px;">
         <p><strong>Drawing 4 — Youth Center</strong> (Foundation Plan)</p>
         <iframe class="pdf-iframe" src="4.2026-02-20_4 - Foundation Plan [Youth Center] _ S2.1_ FOUNDATION PLAN 2.pdf"></iframe>
+      </div>
+
+      <div style="margin-bottom: 50px;">
+        <p><strong>Drawing 5 — Car Dealership</strong> (Exterior Elevations - This did not work in Toggle.AI)</p>
+        <img src="5.%20Failure%20of%20Elevation%20Proof.jpg" alt="Car Dealership Elevation" style="width: 100%; border: 1px solid #ddd; border-radius: 8px; margin-top: 15px;">
       </div>
 
       <div class="q-and-a">
